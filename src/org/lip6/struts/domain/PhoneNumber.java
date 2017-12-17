@@ -7,6 +7,10 @@ public class PhoneNumber {
 	private String phoneKind;
 	private String phoneNumber;
 	private String errors;
+
+	public PhoneNumber(){
+
+	}
 	
 	public PhoneNumber(int id, int idContact, String phoneKind, String phoneNumber, String errors){
 		this.id = id;

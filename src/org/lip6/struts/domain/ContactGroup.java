@@ -2,19 +2,35 @@ package org.lip6.struts.domain;
 
 public class ContactGroup {
 
-	private long groupId;
+	private int groupId;
 	private String groupName;
+	private int idContact;
+
+    public ContactGroup() {
+
+    }
 	
-	public ContactGroup(long groupId, String groupName) {
+	public ContactGroup(int groupId, String groupName, int idContact) {
 		this.groupId = groupId;
 		this.groupName = groupName;
+		this.idContact = idContact;
 	}
 
-	/**
-	 * @return ID Returns ID
-	 */
-	public long getGroupId() {
+
+	public int getGroupId() {
 		return groupId;
+	}
+
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	public int getIdContact() {
+		return idContact;
+	}
+
+	public void setIdContact(int idContact) {
+		this.idContact = idContact;
 	}
 
 	/**
@@ -24,13 +40,6 @@ public class ContactGroup {
 		return groupName;
 	}
 
-	/**
-	 * @param l
-	 *            Sets the Group Id
-	 */
-	public void setGroupId(long l) {
-		groupId = l;
-	}
 
 	/**
 	 * @param string

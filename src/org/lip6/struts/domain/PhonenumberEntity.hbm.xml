@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="org.lip6.struts.domain.PhonenumberEntity" table="phonenumber" schema="hibernateproject">
+        <id name="idPhoneNumber" column="IdPhoneNumber"/>
+        <property name="phoneKind" column="PhoneKind"/>
+        <property name="phoneNumber" column="PhoneNumber"/>
+        <property name="errorPhoneNumber" column="ErrorPhoneNumber"/>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="org.lip6.struts.domain.ContactEntity" table="contact" schema="hibernateproject">
+        <id name="idContact" column="IdContact"/>
+        <property name="firstName" column="FirstName"/>
+        <property name="lastName" column="LastName"/>
+        <property name="email" column="Email"/>
+        <property name="errorContact" column="ErrorContact"/>
+    </class>
+</hibernate-mapping>

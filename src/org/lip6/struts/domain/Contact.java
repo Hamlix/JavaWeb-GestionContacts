@@ -7,11 +7,9 @@ import java.util.List;
 //Bean de nos Contacts
 public class Contact implements Serializable {
 
-	private static final long serialVersionUID = 58409687792501803L;
-	
 	private String error;
 
-	private long id;
+	private int id;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -19,7 +17,7 @@ public class Contact implements Serializable {
 	private List<PhoneNumber> phone;
 	private List<ContactGroup> group;
 
-	public Contact(long id, String firstName, String lastName, String email, List<Address> address, List<PhoneNumber> phone,
+	public Contact(int id, String firstName, String lastName, String email, List<Address> address, List<PhoneNumber> phone,
 			List<ContactGroup> group) {
 		this.id = id;
 		this.firstName = firstName;
@@ -29,14 +27,24 @@ public class Contact implements Serializable {
 		this.phone = phone;
 		this.group = group;
 	}
-	
+
+	public Contact(int id, String firstName, String lastName, String email ) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.address = null;
+		this.phone = null;
+		this.group = null;
+	}
 	public Contact() {}
 
-	/**
-	 * @return ID Returns ID
-	 */
-	public long getId() {
+	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**
@@ -60,12 +68,12 @@ public class Contact implements Serializable {
 		return email;
 	}
 
-	/**
-	 * @return Address
-	 */
-	public List<Address> getAddress() {
-		return address;
-	}
+    /**
+     * @return Address list
+     */
+    public List<Address> getAdress(){
+        return address;
+    }
 
 	/**
 	 * @return Phone list
@@ -80,7 +88,7 @@ public class Contact implements Serializable {
 	public List<ContactGroup> getGroup() {
 		return group;
 	}
-	
+
 	/**
 	 * @return Error
 	 */
@@ -88,13 +96,7 @@ public class Contact implements Serializable {
 		return error;
 	}
 
-	/**
-	 * @param l
-	 *            Sets the ID
-	 */
-	public void setId(long l) {
-		id = l;
-	}
+
 
 	/**
 	 * @param string
@@ -121,7 +123,7 @@ public class Contact implements Serializable {
 	}
 
 	/**
-	 * @param string
+	 * @param address
 	 *            Sets the Address
 	 */
 	public void setAddress(List<Address> address) {
@@ -129,7 +131,7 @@ public class Contact implements Serializable {
 	}
 
 	/**
-	 * @param string
+	 * @param phone
 	 *            Sets the Phones
 	 */
 	public void setPhone(LinkedList<PhoneNumber> phone) {
@@ -137,13 +139,13 @@ public class Contact implements Serializable {
 	}
 
 	/**
-	 * @param string
+	 * @param group
 	 *            Sets the Phones
 	 */
 	public void setGroup(LinkedList<ContactGroup> group) {
 		this.group = group;
 	}
-	
+
 	/**
 	 * @param string
 	 *            Sets errors

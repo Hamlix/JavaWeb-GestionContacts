@@ -25,8 +25,8 @@ public class ContactAction extends DispatchAction {
 		// Contact
 		final long id = lForm.getId();
 
-		// La fonction trim permet de supprimer les espaces en début et en fin
-		// de chaîne s'il y a
+		// La fonction trim permet de supprimer les espaces en dï¿½but et en fin
+		// de chaï¿½ne s'il y a
 		// plusieurs espaces entre les mots, replaceAll les remplacent par un
 		// seul espace
 		final String firstName = lForm.getFirstName().trim().replaceAll(" +", " ");

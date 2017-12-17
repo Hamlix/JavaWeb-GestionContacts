@@ -2,13 +2,18 @@ package org.lip6.struts.domain;
 
 public class Address {
 
-	private long id;
+	private int id;
+	private int idContact;
 	private String street;
 	private String city;
 	private String zip;
 	private String country;
+
+	public Address(){
+
+	}
 	
-	public Address(long id, String street, String city, String zip, String country) {
+	public Address(int id, String street, String city, String zip, String country) {
 		this.id = id;
 		this.street = street;
 		this.city = city;
@@ -16,74 +21,55 @@ public class Address {
 		this.country = country;
 	}
 
-	/**
-	 * @return ID Returns ID
-	 */
-	public long getId() {
-		return id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	/**
-	 * @return Street
-	 */
-	public String getStreet() {
-		return street;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	/**
-	 * @return City
-	 */
-	public String getCity() {
-		return city;
-	}
+    public int getIdContact() {
+        return idContact;
+    }
 
-	/**
-	 * @return Zip
-	 */
-	public String getZip() {
-		return zip;
-	}
+    public void setIdContact(int idContact) {
+        this.idContact = idContact;
+    }
 
-	/**
-	 * @return Country
-	 */
-	public String getCountry() {
-		return country;
-	}
+    public String getStreet() {
+        return street;
+    }
 
-	/**
-	 * @param l
-	 *            Sets the ID
-	 */
-	public void setId(long l) {
-		id = l;
-	}
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-	/**
-	 * @param string
-	 *            sets the Street
-	 */
-	public void setStreet(String string) {
-		street = string;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	/**
-	 * @param string
-	 *            sets the Zip
-	 */
-	public void setZip(String string) {
-		zip = string;
-	}
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	/**
-	 * @param string
-	 *            sets the Country
-	 */
-	public void setCountry(String string) {
-		country = string;
-	}
+    public String getZip() {
+        return zip;
+    }
 
-	@Override
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @Override
 	public String toString() {
 		return "Address [id=" + id + ", street=" + street + ", city=" + city + ", zip=" + zip + ", country=" + country
 				+ "]";
