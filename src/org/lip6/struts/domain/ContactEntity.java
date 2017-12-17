@@ -15,28 +15,7 @@ public class ContactEntity {
     private Collection<AddressEntity> addresses;
     private Collection<ContactgroupEntity> contactgroups;
     private Collection<PhonenumberEntity> phonenumbers;
-
-    public ContactEntity(int idContact, String firstName, String lastName, String email) {
-        this.idContact = idContact;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.errorContact = null;
-        this.addresses = null;
-        this.contactgroups = null;
-        this.phonenumbers = null;
-    }
-
-    public ContactEntity(int idContact, String firstName, String lastName, String email, String errorContact, Collection<AddressEntity> addresses, Collection<ContactgroupEntity> contactgroups, Collection<PhonenumberEntity> phonenumbers) {
-        this.idContact = idContact;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.errorContact = errorContact;
-        this.addresses = addresses;
-        this.contactgroups = contactgroups;
-        this.phonenumbers = phonenumbers;
-    }
+    private Collection<ContactgroupEntity> groups;
 
     @Id
     @Column(name = "IdContact")
@@ -124,6 +103,19 @@ public class ContactEntity {
         this.phonenumbers.remove(ph);
     }
 
+    @ManyToMany(mappedBy = "contacts")
+    public Collection<ContactgroupEntity> getGroups() {
+        return groups;
+    }
+    public void setGroups(Collection<ContactgroupEntity> groups) {
+        this.groups = groups;
+    }
+    public void addGroups(ContactgroupEntity g){
+        this.groups.add(g);
+    }
+    public void removeGroups(ContactgroupEntity g){
+        this.groups.remove(g);
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,6 +1,7 @@
 package org.lip6.struts.domain;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -9,6 +10,7 @@ public class ContactgroupEntity {
     private int idGroup;
     private String groupName;
     private ContactEntity contact;
+    private Collection<ContactEntity> contacts;
 
     @Id
     @Column(name = "IdGroup")
@@ -30,11 +32,26 @@ public class ContactgroupEntity {
         this.groupName = groupName;
     }
 
-    @ManyToOne
+    @ManyToOne()
     public ContactEntity getContact()
     { return contact; }
     public void setContact(ContactEntity c)
     { this.contact = c; }
+
+    @ManyToMany
+    public Collection<ContactEntity> getContacts() {
+        return contacts;
+    }
+    public void setContacts(Collection<ContactEntity> contacts) {
+        this.contacts = contacts;
+    }
+    public void addContact(ContactEntity c){
+        this.contacts.add(c);
+    }
+    public void removeContact(ContactEntity c){
+        this.contacts.remove(c);
+    }
+
 
     @Override
     public boolean equals(Object o) {
