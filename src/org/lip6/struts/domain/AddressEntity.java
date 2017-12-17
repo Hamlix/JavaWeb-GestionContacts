@@ -11,6 +11,7 @@ public class AddressEntity {
     private String city;
     private String zip;
     private String country;
+    private ContactEntity contact;
 
     @Id
     @Column(name = "IdAddress")
@@ -61,6 +62,12 @@ public class AddressEntity {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    @ManyToOne
+    public ContactEntity getContact()
+    { return contact; }
+    public void setContact(ContactEntity c)
+    { this.contact = c; }
 
     @Override
     public boolean equals(Object o) {

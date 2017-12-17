@@ -1,6 +1,7 @@
 package org.lip6.struts.domain;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Entity
@@ -11,6 +12,31 @@ public class ContactEntity {
     private String lastName;
     private String email;
     private String errorContact;
+    private Collection<AddressEntity> addresses;
+    private Collection<ContactgroupEntity> contactgroups;
+    private Collection<PhonenumberEntity> phonenumbers;
+
+    public ContactEntity(int idContact, String firstName, String lastName, String email) {
+        this.idContact = idContact;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.errorContact = null;
+        this.addresses = null;
+        this.contactgroups = null;
+        this.phonenumbers = null;
+    }
+
+    public ContactEntity(int idContact, String firstName, String lastName, String email, String errorContact, Collection<AddressEntity> addresses, Collection<ContactgroupEntity> contactgroups, Collection<PhonenumberEntity> phonenumbers) {
+        this.idContact = idContact;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.errorContact = errorContact;
+        this.addresses = addresses;
+        this.contactgroups = contactgroups;
+        this.phonenumbers = phonenumbers;
+    }
 
     @Id
     @Column(name = "IdContact")
@@ -61,6 +87,43 @@ public class ContactEntity {
     public void setErrorContact(String errorContact) {
         this.errorContact = errorContact;
     }
+
+    @OneToMany(mappedBy="contact", cascade = "CascadeType.REMOVE" )
+    public Collection<AddressEntity> getAddresses()
+    { return addresses; }
+    public void setAddresses (Collection<AddressEntity> adr)
+    { this.addresses = adr; }
+    public void addAddress (AddressEntity adr){
+        this.addresses.add(adr);
+    }
+    public void removeAddress(AddressEntity adr){
+        this.addresses.remove(adr);
+    }
+
+    @OneToMany(mappedBy="contact", cascade="CascadeType.REMOVE")
+    public Collection<ContactgroupEntity> getContactgroups()
+    { return contactgroups; }
+    public void setContactgroups (Collection<ContactgroupEntity> cg)
+    { this.contactgroups = cg; }
+    public void addContactgoup (ContactgroupEntity cg){
+        this.contactgroups.add(cg);
+    }
+    public void removeContactgroup (ContactgroupEntity cg){
+        this.contactgroups.remove(cg);
+    }
+
+    @OneToMany(mappedBy="contact",cascade="CascadeType.REMOVE")
+    public Collection<PhonenumberEntity> getPhonenumbers()
+    { return phonenumbers; }
+    public void setPhonenumbers (Collection<PhonenumberEntity> ph)
+    { this.phonenumbers = ph; }
+    public void addPhonenumber (PhonenumberEntity ph){
+        this.phonenumbers.add(ph);
+    }
+    public void removePhonenumber (PhonenumberEntity ph){
+        this.phonenumbers.remove(ph);
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -10,6 +10,7 @@ public class PhonenumberEntity {
     private String phoneKind;
     private String phoneNumber;
     private String errorPhoneNumber;
+    private ContactEntity contact;
 
     @Id
     @Column(name = "IdPhoneNumber")
@@ -50,6 +51,12 @@ public class PhonenumberEntity {
     public void setErrorPhoneNumber(String errorPhoneNumber) {
         this.errorPhoneNumber = errorPhoneNumber;
     }
+
+    @ManyToOne
+    public ContactEntity getContact()
+    { return contact; }
+    public void setContact(ContactEntity c)
+    { this.contact = c; }
 
     @Override
     public boolean equals(Object o) {

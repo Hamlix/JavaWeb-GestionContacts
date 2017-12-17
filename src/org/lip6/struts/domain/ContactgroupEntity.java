@@ -8,6 +8,7 @@ import java.util.Objects;
 public class ContactgroupEntity {
     private int idGroup;
     private String groupName;
+    private ContactEntity contact;
 
     @Id
     @Column(name = "IdGroup")
@@ -28,6 +29,12 @@ public class ContactgroupEntity {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
+
+    @ManyToOne
+    public ContactEntity getContact()
+    { return contact; }
+    public void setContact(ContactEntity c)
+    { this.contact = c; }
 
     @Override
     public boolean equals(Object o) {
