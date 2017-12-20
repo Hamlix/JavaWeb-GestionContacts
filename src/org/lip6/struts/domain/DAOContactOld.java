@@ -12,11 +12,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class DAOContact {
+public class DAOContactOld {
 
 	private final static String RESOURCE_JDBC = "java:comp/env/jdbc/gestioncontacts";
 
-	public String addContact(final long id, final String firstName, final String lastName, final String email,
+	public String addContact(final String firstName, final String lastName, final String email,
 			final long idAddress, final String street, final String city, final String zip, final String country) {
 
 		System.out.println("Entre dans creation contact DAO");
@@ -28,7 +28,7 @@ public class DAOContact {
 			final DataSource lDataSource = (DataSource) lContext.lookup(RESOURCE_JDBC);
 			lConnection = lDataSource.getConnection();
 
-			// On regarde si la combinaison email/nom existe
+			/* // On regarde si la combinaison email/nom existe
 			final PreparedStatement lPreparedStatementContact =
 
 					lConnection.prepareStatement("SELECT ID FROM contact WHERE LASTNAME = ? AND EMAIL = ?");
@@ -38,10 +38,10 @@ public class DAOContact {
 
 			ResultSet rsContact = lPreparedStatementContact.executeQuery();
 			if (rsContact.next()) {
-				return "La combinaison email/nom existe déjà !";
-			}
+				return "La combinaison email/nom existe dÃ©jÃ  !";
+			}*/
 
-			// On regarde si le email existe
+			/*// On regarde si le email existe
 			final PreparedStatement lPreparedStatementEmail =
 
 					lConnection.prepareStatement("SELECT ID FROM contact WHERE EMAIL = ?");
@@ -49,36 +49,34 @@ public class DAOContact {
 			lPreparedStatementEmail.setString(1, email);
 			ResultSet rsEmail = lPreparedStatementEmail.executeQuery();
 			if (rsEmail.next()) {
-				return "L'email existe déjà !";
-			}
+				return "L'email existe dÃ©jÃ  !";
+			}*/
 
 			// Contact
 			final PreparedStatement lPreparedStatementCreation =
 
 					lConnection
-							.prepareStatement("INSERT INTO CONTACT(ID, LASTNAME, FIRSTNAME, EMAIL) VALUES(?, ?, ?, ?)");
+							.prepareStatement("INSERT INTO CONTACT(IdContact, LastName, FirstName, Email, ErrorContact) VALUES(null, ?, ?, ?,null)");
 
-			lPreparedStatementCreation.setLong(1, id);
-			lPreparedStatementCreation.setString(2, lastName);
-			lPreparedStatementCreation.setString(3, firstName);
-			lPreparedStatementCreation.setString(4, email);
+			lPreparedStatementCreation.setString(1, lastName);
+			lPreparedStatementCreation.setString(2, firstName);
+			lPreparedStatementCreation.setString(3, email);
 			lPreparedStatementCreation.executeUpdate();
 
 			// Address
 
 			// Si l'un des attributs est non vide cela veut dire que les autres
-			// non plus, c'est pourquoi on ne vérifie que la rue
+			// non plus, c'est pourquoi on ne vï¿½rifie que la rue
 			if (!street.isEmpty()) {
 				PreparedStatement lPreparedStatementAddressCreation =
 
 						lConnection.prepareStatement(
-								"INSERT INTO ADDRESS(ID, STREET, CITY, ZIP, COUNTRY) VALUES(?, ?, ?, ?, ?)");
+								"INSERT INTO ADDRESS(IdAddress, Street, City, Zip, Country) VALUES(null, ?, ?, ?, ?)");
 
-				lPreparedStatementAddressCreation.setLong(1, idAddress);
-				lPreparedStatementAddressCreation.setString(2, street);
-				lPreparedStatementAddressCreation.setString(3, city);
-				lPreparedStatementAddressCreation.setString(4, zip);
-				lPreparedStatementAddressCreation.setString(5, country);
+				lPreparedStatementAddressCreation.setString(1, street);
+				lPreparedStatementAddressCreation.setString(2, city);
+				lPreparedStatementAddressCreation.setString(3, zip);
+				lPreparedStatementAddressCreation.setString(4, country);
 				lPreparedStatementAddressCreation.executeUpdate();
 			}
 
@@ -113,21 +111,21 @@ public class DAOContact {
 			final DataSource lDataSource = (DataSource) lContext.lookup(RESOURCE_JDBC);
 			lConnection = lDataSource.getConnection();
 
-			final List<Contact> contacts = new LinkedList<Contact>();
+			final List<ContactEntity> contacts = new LinkedList<ContactEntity>();
 
 			final PreparedStatement lPreparedStatementContact =
 
-					lConnection.prepareStatement("SELECT ID, LASTNAME, FIRSTNAME, EMAIL FROM contact");
+					lConnection.prepareStatement("SELECT IdContact, LastName, FirstName, Email FROM contact");
 
 			ResultSet rsContact = lPreparedStatementContact.executeQuery();
 
 			while (rsContact.next()) {
-				final Long id = rsContact.getLong("ID");
-				final String lastName = rsContact.getString("LASTNAME");
-				final String firstName = rsContact.getString("FIRSTNAME");
-				final String email = rsContact.getString("EMAIL");
+				final int id = rsContact.getInt("IdContact");
+				final String lastName = rsContact.getString("LastName");
+				final String firstName = rsContact.getString("FirstName");
+				final String email = rsContact.getString("Email");
 
-				contacts.add(new Contact(id, lastName, firstName, email, null, null, null));
+				contacts.add(new ContactEntity(id, lastName, firstName, email,null,null,null,null,null));
 			}
 
 			display.setContacts(contacts);
@@ -165,46 +163,47 @@ public class DAOContact {
 			final DataSource lDataSource = (DataSource) lContext.lookup(RESOURCE_JDBC);
 			lConnection = lDataSource.getConnection();
 
-			final List<Contact> contacts = new LinkedList<Contact>();
+			final List<ContactEntity> contacts = new LinkedList<ContactEntity>();
 
 			final PreparedStatement lPreparedStatementContact =
 
-					lConnection.prepareStatement("SELECT ID, LASTNAME, FIRSTNAME, EMAIL FROM contact WHERE ID=?");
+					lConnection.prepareStatement("SELECT IdContact, LastName, FirstName, Email FROM contact WHERE ID=?");
 
 			lPreparedStatementContact.setLong(1, idContact);
 			ResultSet rsContact = lPreparedStatementContact.executeQuery();
 
 			while (rsContact.next()) {
-				final int id = rsContact.getInt("ID");
-				final String lastName = rsContact.getString("LASTNAME");
-				final String firstName = rsContact.getString("FIRSTNAME");
-				final String email = rsContact.getString("EMAIL");
+				final int id = rsContact.getInt("IdContact");
+				final String lastName = rsContact.getString("LastName");
+				final String firstName = rsContact.getString("FirstName");
+				final String email = rsContact.getString("Email");
 
-				final List<Address> address = new LinkedList<Address>();
+				final List<AddressEntity> address = new LinkedList<AddressEntity>();
 
 				final PreparedStatement lPreparedStatementAddress =
 
-						lConnection.prepareStatement("SELECT STREET, CITY, ZIP, COUNTRY FROM address WHERE ID=?");
+						lConnection.prepareStatement("SELECT IdAddress, Street, City, Zip, Country FROM address WHERE IdContact=?");
 
 				lPreparedStatementAddress.setLong(1, idContact);
 				ResultSet rsAddress = lPreparedStatementAddress.executeQuery();
 
 				while (rsAddress.next()) {
 
-					final String street = rsAddress.getString("STREET");
-					final String city = rsAddress.getString("CITY");
-					final String zip = rsAddress.getString("ZIP");
-					final String country = rsAddress.getString("COUNTRY");
+					final String idAddress = rsAddress.getString("IdContact");
+					final String street = rsAddress.getString("Street");
+					final String city = rsAddress.getString("City");
+					final String zip = rsAddress.getString("Zip");
+					final String country = rsAddress.getString("Country");
 
-					address.add(new Address(id, street, city, zip, country));
+					address.add(new AddressEntity(idAddress, street, city, zip, country));
 				}
 
-				final List<ContactGroup> groups = new LinkedList<ContactGroup>();
+				final List<ContactgroupEntity> groups = new LinkedList<ContactgroupEntity>();
 
 				final PreparedStatement lPreparedStatementGroup =
 
 						lConnection.prepareStatement(
-								"SELECT GROUPID, GROUPNAME FROM contactgroup INNER JOIN groupcomposition "
+								"SELECT IdGroup, GroupName FROM contactgroup INNER JOIN groupcomposition "
 										+ "ON groupcomposition.IDGROUP = contactgroup.GROUPID AND groupcomposition.IDCONTACT = ?");
 
 				lPreparedStatementGroup.setInt(1, id);
@@ -212,7 +211,7 @@ public class DAOContact {
 				ResultSet rsGroup = lPreparedStatementGroup.executeQuery();
 
 				while (rsGroup.next()) {
-					final Long groupId = rsGroup.getLong("GROUPID");
+					final int groupId = rsGroup.getInt("GROUPID");
 					final String groupName = rsGroup.getString("GROUPNAME");
 
 					groups.add(new ContactGroup(groupId, groupName));
@@ -343,10 +342,10 @@ public class DAOContact {
 			ResultSet rsContact = lPreparedStatementContact.executeQuery();
 			if (rsContact.next()) {
 				
-				//On regarde si le contact à update est le même contact (pour éviter la combinaison email/nom existe déjà si on ne change rien)
+				//On regarde si le contact ï¿½ update est le mï¿½me contact (pour ï¿½viter la combinaison email/nom existe dï¿½jï¿½ si on ne change rien)
 				final int idContact = rsContact.getInt("ID");
 				if(idContact != id) {
-					return "La combinaison email/nom existe déjà !";
+					return "La combinaison email/nom existe dÃ©jÃ  !";
 				}
 			}
 
@@ -361,7 +360,7 @@ public class DAOContact {
 				
 				final int idContact = rsEmail.getInt("ID");
 				if(idContact != id) {
-					return "L'email existe déjà !";
+					return "L'email existe dÃ©jÃ  !";
 				}
 			}
 
@@ -464,7 +463,7 @@ public class DAOContact {
 
 			while (rsContact.next()) {
 
-				final Long id = rsContact.getLong("ID");
+				final int id = rsContact.getInt("ID");
 				final String lastName = rsContact.getString("LASTNAME");
 				final String firstName = rsContact.getString("FIRSTNAME");
 				final String email = rsContact.getString("EMAIL");
@@ -523,7 +522,7 @@ public class DAOContact {
 
 			while (rsAddress.next()) {
 
-				final long id = rsAddress.getLong("ID");
+				final int id = rsAddress.getInt("ID");
 				final String street = rsAddress.getString("STREET");
 				final String city = rsAddress.getString("CITY");
 				final String zip = rsAddress.getString("ZIP");

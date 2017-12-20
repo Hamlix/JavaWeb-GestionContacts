@@ -9,7 +9,12 @@ public class ContactGroup {
     public ContactGroup() {
 
     }
-	
+
+	public ContactGroup(int groupId, String groupName) {
+		this.groupId = groupId;
+		this.groupName = groupName;
+		this.idContact = idContact;
+	}
 	public ContactGroup(int groupId, String groupName, int idContact) {
 		this.groupId = groupId;
 		this.groupName = groupName;
